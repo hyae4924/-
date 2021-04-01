@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     <meta charset="utf-8">
+     <title>숫자야구</title>
+ </head>
+ <body>
+     <script src="숫자야구.js"></script>
+     <p>참고 (1~9숫자/ 중복없음 )</p>
+         
+    
+  </body>    
+</html> 
+
+var 바디= document.body ;
+
+
+
+var 숫자후보 = [1,2,3,4,5,6,7,8,9];
+var 숫자배열 = [];
+for(i=0;i<4;i=i+1){
+ var 뽑은것 = 숫자후보.splice(Math.floor(Math.random()*9-i),1)[0] ;
+ 숫자배열.push(뽑은것);
+}
+var 숫자배열문자화 =숫자배열.join('');
+console.log(숫자배열문자화,'정답미리보기',);
+
+
+
+var 결과창 = document.createElement('h1');
+결과창.textContent = '숫자야구'
+바디.append(결과창);
+
+var 폼 = document.createElement('form');
+바디.append(폼);
+
+var 입력창 =document.createElement('input');
+입력창.maxLength =4;
+폼.append(입력창);
+
+var 버튼 =document.createElement('button');
+버튼.textContent = '정답';
+폼.append(버튼);
+
+var 틀린횟수 =0
+var 틀린횟수창 = document.createElement('div')
+틀린횟수창.textContent = '기회 6번 남음'
+바디.append(틀린횟수창);
+
+폼.addEventListener('submit',function 콜백함수(e){
+    e.preventDefault();
+  
+
+
+    
+
+    if(입력창.value === 숫자배열문자화 ){
+            결과창.textContent = '홈런' ;
+            입력창.value ='';
+            틀린횟수= 0;
+            //새로운문제 내기 
+            숫자후보 = [1,2,3,4,5,6,7,8,9];
+            숫자배열 = [];
+            for(i=0;i<4;i=i+1){
+            뽑은것 = 숫자후보.splice(Math.floor(Math.random()*9-i),1)[0] ;
+            숫자배열.push(뽑은것);
+            }
+            숫자배열문자화 =숫자배열.join('');
+            console.log(숫자배열문자화,'정답미리보기',);
+
+    }else{
+            틀린횟수= 틀린횟수+1 ;
+            
+            if(틀린횟수>6){
+              결과창.textContent ='응 실패야 븅신아~!정답은'+숫자배열문자화+'입니다 다음문제 낼게요';
+              입력창.value ='';
+              틀린횟수= 0;
+            //새로운문제 내기 
+            숫자후보 = [1,2,3,4,5,6,7,8,9];
+            숫자배열 = [];
+            for(i=0;i<4;i=i+1){
+            뽑은것 = 숫자후보.splice(Math.floor(Math.random()*9-i),1)[0] ;
+            숫자배열.push(뽑은것);
+            }
+            숫자배열문자화 =숫자배열.join('');
+            console.log(숫자배열문자화,'정답미리보기',);
+
+            }else{
+
+
+            var 스트라이크 =0 ;
+            var 볼 = 0 ;
+            var 대답 = 입력창.value ;
+            var 대답배열화 = 대답.split('')
+            for(i=0;i<4;i=i+1){
+                if(숫자배열[i]=== Number(대답배열화[i])){
+                  스트라이크 =스트라이크+1;
+                  입력창.value= '';
+                }else if(-1 < 숫자배열.indexOf(Number(대답배열화[i]))){
+                  볼= 볼+1
+                  입력창.value= '';
+                  } 결과창.textContent= 스트라이크+'S'+ 볼 +'B' ;
+                  
+            }}틀린횟수창.textContent ='기회'+ (6-틀린횟수) +'번남음';
+          }
+    
+
+})
